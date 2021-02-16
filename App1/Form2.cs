@@ -17,6 +17,8 @@ using NAudio.Wave;
 using NAudio.Lame;
 using NAudio.Wave.SampleProviders;
 using System.Reflection;
+using System.Text.RegularExpressions;
+
 namespace App1
 {
     public partial class Form2 : Form
@@ -154,17 +156,19 @@ namespace App1
                         if ("مرحبا" == (text))
                         {
                             bunifuTextBox1.Clear();
-                            bunifuTextBox1.Text = "مرحبا بك يا عبدالرحمن" + Environment.NewLine;
-                            CloudTextToSpeech("مرحبا بك يا عبدالرحمن");
-                        }
-                        if ("بسم الله الرحمن الرحيم" == (text))
-                        {
-                            bunifuTextBox1.Text = txb + ' ' + "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ";
-                        }
+                            if (Regex.IsMatch(Environment.UserName, "^[a-zA-Z0-9. -_?]*$"))
+                            {
+                                Console.WriteLine("en");
+                                bunifuTextBox1.Text = Environment.UserName + " مرحبا بك يا" +  Environment.NewLine;
+                            }
+                            else
+                            {
+                                bunifuTextBox1.Text = " مرحبا بك يا" +  Environment.UserName  + Environment.NewLine;
 
-                        if ("الحمد لله رب العالمين" == (text))
-                        {
-                            bunifuTextBox1.Text = txb + ' ' + "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ";
+                            }
+                            CloudTextToSpeech(" مرحبا بك يا " + Environment.UserName);
+
+
                         }
 
                         if ("كروم" == (text))
