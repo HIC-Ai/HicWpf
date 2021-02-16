@@ -66,7 +66,7 @@ namespace App1
             MixAudioFiles(timestamp);
 
         }
-        public void apktoolDecompile()
+        public void recognition()
         {
             while (true)
             {
@@ -319,7 +319,7 @@ namespace App1
         {
             Label.CheckForIllegalCrossThreadCalls = false;
 
-            Thread thread1 = new Thread(apktoolDecompile);
+            Thread thread1 = new Thread(recognition);
             thread1.IsBackground = true;
             thread1.Start();
         }
