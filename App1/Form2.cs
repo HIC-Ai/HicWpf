@@ -107,6 +107,7 @@ namespace App1
             Console.WriteLine(e.Data);
             string txb = bunifuTextBox1.Text;
             MyrecoHex = e.Data;
+
             if (MyrecoHex != null)
             {
                 //string text = e.Data;
@@ -115,66 +116,81 @@ namespace App1
                 {
                     byte[] dBytes = StringToByteArray(MyrecoHex);
                     string text = Encoding.UTF8.GetString(dBytes);
-                    //textBox1.Text = text;
-                    //textBox1.Text = textBox1.Text + e.Data + Environment.NewLine;
-                    //textBox1.Text = textBox1.Text + text + ' ';
-                    Console.WriteLine(text);
-                    if ("ايقاف".Contains(text))
+                    Console.WriteLine(this.WindowState);
+                    if (this.WindowState == FormWindowState.Normal)
                     {
-                        Process[] prs = Process.GetProcesses();
-
-
-                        foreach (Process pr in prs)
+                        //textBox1.Text = text;
+                        //textBox1.Text = textBox1.Text + e.Data + Environment.NewLine;
+                        //textBox1.Text = textBox1.Text + text + ' ';
+                        Console.WriteLine(text);
+                        if ("ايقاف".Contains(text))
                         {
-                            if (pr.ProcessName == "recognition")
-                            {
+                            Process[] prs = Process.GetProcesses();
 
-                                pr.Kill();
+
+                            foreach (Process pr in prs)
+                            {
+                                if (pr.ProcessName == "recognition")
+                                {
+
+                                    pr.Kill();
+
+                                }
 
                             }
+                            bunifuTextBox1.Clear();
+                            //process.Kill();
+                            //process.Close();
+                            //process.Dispose();
+                            bunifuTextBox1.Text = "تم الايقاف";
+                            CloudTextToSpeech("تم الايقاف");
+                        }
+                        if ("السلام عليكم" == (text))
+                        {
+                            bunifuTextBox1.Clear();
+                            bunifuTextBox1.Text = "وعليكم السلام" + Environment.NewLine;
+                            CloudTextToSpeech("وعليكم السلام");
+                        }
+                        if ("مرحبا" == (text))
+                        {
+                            bunifuTextBox1.Clear();
+                            bunifuTextBox1.Text = "مرحبا بك يا عبدالرحمن" + Environment.NewLine;
+                            CloudTextToSpeech("مرحبا بك يا عبدالرحمن");
+                        }
+                        if ("بسم الله الرحمن الرحيم" == (text))
+                        {
+                            bunifuTextBox1.Text = txb + ' ' + "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ";
+                        }
+
+                        if ("الحمد لله رب العالمين" == (text))
+                        {
+                            bunifuTextBox1.Text = txb + ' ' + "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ";
+                        }
+
+                        if ("كروم" == (text))
+                        {
+                            _ = Process.Start("chrome", @"lol");
+                        }
+
+                        if ("فيسبوك" == (text))
+                        {
+                            _ = Process.Start("chrome", @"https://www.facebook.com/");
+                        }
+                        if ("يوتيوب" == (text))
+                        {
+                            _ = Process.Start("chrome", @"https://www.youtube.com/");
 
                         }
-                        bunifuTextBox1.Clear();
-                        //process.Kill();
-                        //process.Close();
-                        //process.Dispose();
-                        bunifuTextBox1.Text = "تم الايقاف";
-                        CloudTextToSpeech("تم الايقاف");
                     }
-                    if ("السلام عليكم" == (text))
+                    if (this.WindowState == FormWindowState.Minimized)
                     {
-                        bunifuTextBox1.Clear();
-                        bunifuTextBox1.Text = "وعليكم السلام" + Environment.NewLine;
-                        CloudTextToSpeech("وعليكم السلام");
-                    }
-                    if ("مرحبا" == (text))
-                    {
-                        bunifuTextBox1.Clear();
-                        bunifuTextBox1.Text = "مرحبا بك يا عبدالرحمن" + Environment.NewLine;
-                        CloudTextToSpeech("مرحبا بك يا عبدالرحمن");
-                    }
-                    if ("بسم الله الرحمن الرحيم" == (text))
-                    {
-                        bunifuTextBox1.Text = txb + ' ' + "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ ";
-                    }
+                        if (text == "المساعد الطبي")
+                        {
+                            this.WindowState = FormWindowState.Minimized;
+                            this.Show();
+                            this.WindowState = FormWindowState.Normal;
 
-                    if ("الحمد لله رب العالمين" == (text))
-                    {
-                        bunifuTextBox1.Text = txb + ' ' + "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ";
-                    }
-
-                    if ("كروم" == (text))
-                    {
-                        _ = Process.Start("chrome", @"lol");
-                    }
-
-                    if ("فيسبوك" == (text))
-                    {
-                        _ = Process.Start("chrome", @"https://www.facebook.com/");
-                    }
-                    if ("يوتيوب" == (text))
-                    {
-                        _ = Process.Start("chrome", @"https://www.youtube.com/");
+                        }
 
                     }
                 }
@@ -336,6 +352,17 @@ namespace App1
             // which this will cause to close everything in your application
             //Also if you want to be more aggressive, there is another option, you can  
             //use, Environment.Exit(1), which will basically kill you process.
+        }
+
+        private void WindowClos(object sender, FormClosedEventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void WindowClos(object sender, FormClosingEventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+
         }
     }
 }

@@ -182,6 +182,8 @@ namespace App1
             this.Controls.Add(this.bunifuTextBox1);
             this.Name = "Form2";
             this.Text = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowClos);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WindowClos);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
 
