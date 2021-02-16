@@ -141,6 +141,16 @@ namespace App1.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Default {
+            get {
+                object obj = ResourceManager.GetObject("Default", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Info_24px {
@@ -237,6 +247,16 @@ namespace App1.Properties {
             get {
                 object obj = ResourceManager.GetObject("Plus_16px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] recognition {
+            get {
+                object obj = ResourceManager.GetObject("recognition", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
