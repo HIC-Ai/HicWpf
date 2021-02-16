@@ -91,15 +91,11 @@ namespace App1
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
                     process.WaitForExit();
+                    break;
                 }
                 catch (Exception ex)
                 {
-                    Process.GetProcesses()
-                         .Where(x => x.ProcessName.ToLower()
-                                      .StartsWith("recognition"))
-                         .ToList()
-                         .ForEach(x => x.Kill());
-                    
+                    try { Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch { }
                     //MessageBox.Show(ex.ToString());
                 }
             }
@@ -290,6 +286,10 @@ namespace App1
 
         private void ContextMenuExit(object sender, EventArgs e)
         {
+            try{ Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch { }
+            //process.Kill();
+            //process.Close();
+            //process.Dispose();
             this.Visible = false;
             Application.Exit();
             Environment.Exit(0);
