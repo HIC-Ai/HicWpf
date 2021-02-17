@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Syncfusion.UI.Xaml.Scheduler;
 
 namespace App1
 {
@@ -20,6 +21,7 @@ namespace App1
     /// </summary>
     public partial class MainWindow : Window
     {
+        SfScheduler schedule = new SfScheduler();
         public MainWindow()
         {
             InitializeComponent();
