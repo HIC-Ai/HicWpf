@@ -66,7 +66,7 @@ namespace App1
             MixAudioFiles(timestamp);
 
         }
-        public void recognition()
+        public void Recognition()
         {
             while (true)
             {
@@ -93,9 +93,9 @@ namespace App1
                     process.WaitForExit();
                     break;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    try { Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch { }
+                    try { Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch  (Exception){ }
                     //MessageBox.Show(ex.ToString());
                 }
             }
@@ -114,7 +114,8 @@ namespace App1
                 {
                     byte[] dBytes = StringToByteArray(MyrecoHex);
                     string text = Encoding.UTF8.GetString(dBytes);
-                    Console.WriteLine(this.WindowState);
+                    Console.WriteLine(text);
+
                     if (this.WindowState == FormWindowState.Normal)
                     {
                         //textBox1.Text = text;
@@ -271,6 +272,7 @@ namespace App1
             this.SystemTrayIcon.Text = "System Tray App";
             this.SystemTrayIcon.Visible = true;
             ContextMenu menu = new ContextMenu();
+            menu.MenuItems.Add("Settings", ContextMenuSettings);
             menu.MenuItems.Add("Exit", ContextMenuExit);
             this.SystemTrayIcon.ContextMenu = menu;
 
@@ -286,15 +288,15 @@ namespace App1
 
         private void ContextMenuExit(object sender, EventArgs e)
         {
-            try{ Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch { }
-            //process.Kill();
-            //process.Close();
-            //process.Dispose();
+            try{ Process.GetProcesses().Where(x => x.ProcessName.ToLower().StartsWith("recognition")).ToList().ForEach(x => x.Kill()); } catch (Exception) { }
             this.Visible = false;
             Application.Exit();
             Environment.Exit(0);
         }
 
+        private void ContextMenuSettings(object sender, EventArgs e)
+        {
+        }
         private void WindowResize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -319,7 +321,7 @@ namespace App1
         {
             Label.CheckForIllegalCrossThreadCalls = false;
 
-            Thread thread1 = new Thread(recognition);
+            Thread thread1 = new Thread(Recognition);
             thread1.IsBackground = true;
             thread1.Start();
         }
@@ -346,18 +348,6 @@ namespace App1
                 this.Left = this.Left - this.Width + oldWidth;
             }
         }
-        void Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            process.Kill();
-            process.Close();
-            process.Dispose();
-            //And here you can call 
-            Application.Exit();
-            // which this will cause to close everything in your application
-            //Also if you want to be more aggressive, there is another option, you can  
-            //use, Environment.Exit(1), which will basically kill you process.
-        }
-
         private void WindowClos(object sender, FormClosedEventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
